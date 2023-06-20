@@ -1,15 +1,25 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ContactAPI.Data;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ContactAPI.Controllers
 {
 
     [ApiController]
-    [Route("api/[controller")]
+    [Route("api/[controller]")]
     public class ContactsController : Controller
     {
-        public IActionResult Index()
+        private readonly ContactsAPIDbContext dbContext;
+
+        public ContactsController(ContactsAPIDbContext dbContext)
         {
-            return View();
+            this.dbContext = dbContext;
+        }
+
+        [HttpGet]
+        public IActionResult GetContacts()
+        {
+
+            return Ok(dbContext.Contacts.ToList());
         }
     }
 }
